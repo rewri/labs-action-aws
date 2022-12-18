@@ -1,9 +1,11 @@
 FROM node:16-slim as BUILDER
+
 LABEL maintainer='Rérisson Fumes'
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+
 RUN npm install
 
 COPY src ./src
@@ -20,4 +22,4 @@ USER node
 
 EXPOSE 3020
 
-CMD [ "npm", "run-script", "dev"]
+CMD [ "npm", "run-script", "start"]

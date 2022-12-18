@@ -1,0 +1,89 @@
+version: '3.9'
+
+x-common-variables:
+  &common-variables
+  NODE_ENV: $NODE_ENV
+  APP_NAME: $APP_NAME
+  APP_VERSION: $APP_VERSION
+  APP_PORT: $APP_PORT
+  DB_DIALECT: $DB_DIALECT
+  DB_USER: $DB_USER
+  DB_PASSWORD: $DB_PASSWORD
+  DB_NAME: $DB_NAME
+  DB_PORT: $DB_PORT
+
+services:
+
+  database:
+    container_name: controle-estoque-db
+    build:
+      context: ./backend/database
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - db_config:/etc/mysql
+      - db_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      <<: *common-variables
+      DB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      DB_DATABASE: $DB_DATABASE
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_TIMEZONE: $DB_TIMEZONE
+    env_file: .env
+
+  api:
+    container_name: controle-estoque-api
+    build:
+      context: "./backend"
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    environment:
+      <<: *common-variables
+      API_PORT: $API_PORT
+      API_KEY: $API_KEY
+      DB_HOST: $DB_HOST
+    depends_on:
+      - database
+
+  client:
+    container_name: controle-estoque-client
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app
+    environment:
+      REACT_APP_PATH: $REACT_APP_PATH
+      REACT_APP_NODE_ENV: $REACT_APP_NODE_ENV
+      REACT_APP_API_URL: $REACT_APP_API_URL
+      REACT_APP_API_AUTH: $REACT_APP_API_AUTH
+      CHOKIDAR_USEPOLLING: $CHOKIDAR_USEPOLLING
+    env_file: .env
+    ports:
+      - 3000:3000
+    stdin_open: true
+    depends_on:
+      - api
+
+  nginx:
+    container_name: controle-estoque-nginx
+    build:
+      context: ./frontend/nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3050:80
+    depends_on:
+      - api
+      - client
+
+volumes:
+  db_config:
+  db_data:
