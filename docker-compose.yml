@@ -67,8 +67,6 @@ services:
       REACT_APP_API_AUTH: $REACT_APP_API_AUTH
       CHOKIDAR_USEPOLLING: $CHOKIDAR_USEPOLLING
     env_file: .env
-    ports:
-      - 3000:3000
     stdin_open: true
     depends_on:
       - api
@@ -80,7 +78,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - 3050:80
+      - "3050:80"
     depends_on:
       - api
       - client
