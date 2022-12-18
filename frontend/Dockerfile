@@ -10,9 +10,9 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:1.23
+FROM nginx
 
-EXPOSE 3000
+# EXPOSE 3000
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
