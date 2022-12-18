@@ -39,6 +39,7 @@ build/Release
 
 # production
 /build
+fontend/build
 
 # Dependency directories
 node_modules/
@@ -138,3 +139,4 @@ yarn-debug.log*
 yarn-error.log*
 
 backend/uploads/*
+frontend/build

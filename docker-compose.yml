@@ -78,7 +78,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "3050:80"
+      - "3050:8088"
     depends_on:
       - api
       - client
