@@ -8,12 +8,14 @@ RUN npm install --loglevel=error && npm cache clean --force --loglevel=error
 
 COPY . .
 
-RUN npm run build
+RUN npm run start
 
-FROM nginx:1.23
+#RUN npm run build
 
-EXPOSE 3000
+#FROM nginx:1.23
 
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+#EXPOSE 3000
 
-COPY --from=builder /app/build /usr/share/nginx/html
+#COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+#COPY --from=builder /app/build /usr/share/nginx/html
