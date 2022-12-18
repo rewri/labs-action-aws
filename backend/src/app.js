@@ -14,7 +14,7 @@ const errorHelper = require('./helpers/error.helper.js');
 const authMiddleware = require('./services/auth.service.js');
 
 app.use(httpLogger);
-app.use(authMiddleware);
+//app.use(authMiddleware);
 
 const routes = require('./routes/router.routes.js');
 routes.forEach(({ route, router }) => {
@@ -23,9 +23,9 @@ routes.forEach(({ route, router }) => {
 
 app.use((err, req, res, next) => {
   const error = { "statusText": "failure", "error": err.message };
-  if (config.node_env == 'development') {
-    error["stack"] = err.stack;
-  }
+  //if (config.node_env == 'development') {
+  error["stack"] = err.stack;
+  //}
   res.status(err.status || 500).json(error);
   logger.error({
     agent: req.get('User-Agent'),
