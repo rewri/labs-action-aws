@@ -8,9 +8,11 @@ RUN npm install --loglevel=error && npm cache clean --force --loglevel=error
 
 COPY . .
 
-RUN npm run start
+RUN npm run build
 
-#RUN npm run build
+RUN npm install -g serve
+
+RUN serve -s build
 
 #FROM nginx:1.23
 
