@@ -10,14 +10,10 @@ COPY . .
 
 RUN npm run build
 
-RUN npm install -g serve
+FROM nginx:1.23
 
-RUN serve -s build
+EXPOSE 3000
 
-#FROM nginx:1.23
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-#EXPOSE 3000
-
-#COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-
-#COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
