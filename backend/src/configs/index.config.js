@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 module.exports = {
   node_env: process.env.NODE_ENV || 'development',
   app_name: process.env.APP_NAME,
-  app_port: process.env.API_PORT || 3020,
+  app_port: process.env.API_PORT || 3030,
   app_key: process.env.APP_KEY,
   app_version: process.env.APP_VERSION || '1.0.0',
   log: {

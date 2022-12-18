@@ -24,6 +24,6 @@ COPY --from=BUILDER /usr/src/app ./
 
 USER node
 
-EXPOSE 3020
+EXPOSE 3030
 
 CMD [ "npm", "run-script", "start"]
