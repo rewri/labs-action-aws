@@ -19,5 +19,5 @@ module.exports = {
     dateStrings: true,
     typeCast: true,
   },
-  timezone: process.env.DB_TIMEZONE
+  // timezone: process.env.DB_TIMEZONE
 };
