@@ -8,7 +8,11 @@ COPY package*.json ./
 
 RUN npm install
 
+RUN mkdir logs && chmod -R 777 logs
+
 COPY src ./src
+
+COPY logs ./logs
 
 FROM node:16-alpine
 
